@@ -1,0 +1,108 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map2.js",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 0.75
+        },
+        "#background": {
+            "scaleInDock": 1
+        },
+        "#tile": {
+            "scaleInDock": 0.5
+        },
+        "#tileset2": {
+            "scaleInDock": 1
+        },
+        "map2.js": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 752,
+                "y": 393
+            }
+        },
+        "map2.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "untitled.js": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 784,
+                "y": 573
+            }
+        },
+        "untitled.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "untitled.tmj": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 645.3333333333334,
+                "y": 452.66666666666674
+            }
+        },
+        "untitled.tmj#tileset": {
+            "scaleInDock": 1
+        },
+        "untitled.tmj#tileset2": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 645.3333333333334,
+                "y": 452.66666666666674
+            }
+        },
+        "untitled.tmx#Sprite-0001": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx#Sprite-0002": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "untitled.tmx#Sprite-0003": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx#buildings-and-street-cityscape-vector": {
+            "scaleInDock": 0.25
+        },
+        "untitled.tmx#tileset": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx#tileset2": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "D:/C++/project2/assets",
+    "map.height": 16,
+    "map.lastUsedFormat": "js",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 21,
+    "openFiles": [
+        "untitled.js",
+        "map2.js"
+    ],
+    "project": "map.tiled-project",
+    "recentFiles": [
+        "untitled.js",
+        "map2.js",
+        "untitled.tmj",
+        "untitled.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}

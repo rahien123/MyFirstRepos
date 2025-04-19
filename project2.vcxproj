@@ -19,7 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="project2.cpp" />
+    <ClInclude Include="header\def.h" />
+    <ClInclude Include="header\Graphics.h" />
+    <ClInclude Include="header\map.h" />
+    <ClInclude Include="header\player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\def.cpp" />
+    <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\project2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -74,8 +84,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\SDL2-2.30.11\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SDL2-2.30.11\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\SDL2_ttf-2.24.0\include;D:\SDL2_mixer-2.8.1\include;D:\SDL2_image-2.8.5\include;D:\SDL2-2.30.11\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SDL2_ttf-2.24.0\lib\x64;D:\SDL2_mixer-2.8.1\lib\x64;D:\SDL2_image-2.8.5\lib\x64;D:\SDL2-2.30.11\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,11 +121,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
