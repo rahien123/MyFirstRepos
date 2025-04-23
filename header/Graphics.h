@@ -18,6 +18,7 @@ public:
 	void prepareScene();
 
 	void renderTexture(int x,int y,SDL_Rect* clip= NULL,SDL_RendererFlip flip=SDL_FLIP_NONE);
+	void renderPlayer(int x, int y, SDL_Rect* clip = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	void renderBackground(int x, int y);
 	void presentScene();
 

@@ -14,31 +14,33 @@ public:
     bool loadSprites();
     void free();
 
-    void setCollisionStatus(Map& tileMap);
 
     void setCamera();
     SDL_Rect& getCamera() {
         return mCamera;
     }
-
-    void HandleEvent(SDL_Event &event,Map& tilemap);
+    bool checkCollisionWithGround(Map& tilemap);
+    bool checkCollisionWithRightWall(Map& tileMap);
+    bool checkCollisionWithLeftWall(Map& tileMap);
+    bool checkCollisionWithCeiling(Map& tileMap);
+    void setCollisionStatus(Map& tilemap);
+    void HandleEvent(SDL_Event &event);
     void move(Map& tilemap);
     void render();
 private:
     Graphics sprites[4];
     int currentFrame = 0;
 
-    int PLAYER_WIDTH = 54;
-    int PLAYER_HEIGHT = 98;
+ 
 
     int frameCount = 0;
  
     SDL_Rect mPlayerBox;
     SDL_Rect mCamera;
 
-    int speedX = 4.0f;
-    int velX = speedX;
-    int velY = 0.0f;
+    float speedX = 3.0f;
+    float velX = speedX;
+    float velY = 0.0f;
 
     bool onGround = false;
     bool touchingWallLeft = false;

@@ -48,6 +48,27 @@ void Graphics::renderTexture(int x,int y,SDL_Rect* clip ,SDL_RendererFlip flip) 
 	}
 }
 
+void Graphics::renderPlayer(int x, int y, SDL_Rect* clip, SDL_RendererFlip flip) {
+	SDL_Rect dest;
+	dest.x = x;
+	dest.y = y;
+	if (clip != NULL)
+	{
+		dest.w = clip->w;
+		dest.h = clip->h;
+	}
+	else {
+		dest.w = PLAYER_WIDTH;
+		dest.h = PLAYER_HEIGHT;
+	}
+	if (flip == SDL_FLIP_NONE) {
+		SDL_RenderCopy(renderer, mTexture, clip, &dest);
+	}
+	else {
+		SDL_RenderCopyEx(renderer, mTexture, clip, &dest, 0.0, NULL, flip);
+	}
+}
+
 void Graphics::renderBackground(int x, int y) {
 	SDL_Rect dest;
 	dest.x = x;

@@ -6,7 +6,8 @@
 
 
 
-
+const int PLAYER_WIDTH = 38;
+const int PLAYER_HEIGHT = 50;
 const float GRAVITY = 0.5f;
 const float JUMP_FORCE = -10.0f;
 const float WALL_SLIDE_SPEED = 1.5f;
@@ -18,6 +19,7 @@ const int TOTAL_TILES = 336;
 const int LEVEL_WIDTH = 1344;
 const int LEVEL_HEIGHT = 1024;
 
+const int TILE_BLANK = 0;
 const int TILE_POLE = 1;
 const int TILE_PAVEMENT = 2;
 const int TILE_BUILDING = 3;

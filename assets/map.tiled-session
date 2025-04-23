@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map2.js",
+    "activeFile": "map6.js",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -28,6 +28,50 @@
             }
         },
         "map2.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "map3.js": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 747,
+                "y": 411
+            }
+        },
+        "map3.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "map4.js": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 737,
+                "y": 345
+            }
+        },
+        "map4.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "map5.js": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 437,
+                "y": 633
+            }
+        },
+        "map5.js#tileset2": {
+            "scaleInDock": 1
+        },
+        "map6.js": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 316.66666666666674,
+                "y": 407.57575757575773
+            }
+        },
+        "map6.js#tileset2": {
             "scaleInDock": 1
         },
         "untitled.js": {
@@ -90,13 +134,19 @@
     "map.tileWidth": 64,
     "map.width": 21,
     "openFiles": [
-        "untitled.js",
-        "map2.js"
+        "map3.js",
+        "map4.js",
+        "map5.js",
+        "map6.js"
     ],
     "project": "map.tiled-project",
     "recentFiles": [
-        "untitled.js",
+        "map3.js",
+        "map4.js",
+        "map5.js",
+        "map6.js",
         "map2.js",
+        "untitled.js",
         "untitled.tmj",
         "untitled.tmx"
     ],

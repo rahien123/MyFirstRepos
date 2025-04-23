@@ -22,8 +22,12 @@ int main(int argc, char* args[]) {
 	if (!gTileTexture.loadTexture("assets/tileset2.png")) {
 		logErrorAndExit("load tile texture sprite failed", SDL_GetError());
 	}
-	Map map1;
+	Map map1,map2,map3,map4,map5,map6;
 	if (!map1.setTiles("assets/map1.txt")) {
+		logErrorAndExit("load map failed", SDL_GetError());
+	}
+	
+	if (!map2.setTiles("assets/map2.txt")) {
 		logErrorAndExit("load map failed", SDL_GetError());
 	}
 	setTileClips();
@@ -33,16 +37,15 @@ int main(int argc, char* args[]) {
 		while (SDL_PollEvent(&event) != 0) {
 			if (event.type == SDL_QUIT) quit = true;
 
-			player.HandleEvent(event, map1);
-
+			player.HandleEvent(event);
+			
 		}
 		background.prepareScene();
 		background.renderBackground(0, 0);
 		
+		player.move(map2);
 
-		map1.drawMap(player.getCamera());
-		
-		player.move(map1);
+		map2.drawMap(player.getCamera());
 		player.render();
 		background.presentScene();
 		SDL_Delay(16);
