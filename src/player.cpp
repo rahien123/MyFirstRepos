@@ -50,14 +50,14 @@ void Player::setCamera() {
     {
         mCamera.x = 0;
     }
-    if (mCamera.y < 0)
+    /*if (mCamera.y < 0)
     {
         mCamera.y = 0;
     }
     if (mCamera.x > LEVEL_WIDTH - SCREEN_WIDTH)
     {
         mCamera.x = LEVEL_WIDTH - SCREEN_WIDTH;
-    }
+    }*/
     if (mCamera.y > LEVEL_HEIGHT - SCREEN_HEIGHT)
     {
         mCamera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
@@ -164,11 +164,11 @@ bool Player::checkCollisionWithRightWall(Map& tileMap) {
 
 bool Player::checkCollisionWithCeiling(Map& tileMap) {
     //tránh vượt ngoài map
-    if (mPlayerBox.y+velY < 0) {
+    /*if (mPlayerBox.y + velY < 0) {
         mPlayerBox.y = 0;
         velY = 0;
         return true;
-    }
+    }*/
 
     for (int i = 0; i < TOTAL_TILES; ++i) {
         Tile* tile = tileMap.tileSet[i];

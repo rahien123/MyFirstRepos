@@ -24,14 +24,16 @@ public:
     bool checkCollisionWithLeftWall(Map& tileMap);
     bool checkCollisionWithCeiling(Map& tileMap);
     void setCollisionStatus(Map& tilemap);
+
+    SDL_Rect getPlayerBox() {
+        return mPlayerBox;
+    }
     void HandleEvent(SDL_Event &event);
     void move(Map& tilemap);
     void render();
 private:
     Graphics sprites[4];
     int currentFrame = 0;
-
- 
 
     int frameCount = 0;
  

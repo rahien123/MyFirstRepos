@@ -6,6 +6,7 @@
     "activeFile": "map6.js",
     "expandedProjectPaths": [
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
             "scaleInDock": 0.75
@@ -23,7 +24,7 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 752,
+                "x": 751,
                 "y": 393
             }
         },
@@ -137,15 +138,16 @@
         "map3.js",
         "map4.js",
         "map5.js",
-        "map6.js"
+        "map6.js",
+        "map2.js"
     ],
     "project": "map.tiled-project",
     "recentFiles": [
         "map3.js",
         "map4.js",
         "map5.js",
-        "map6.js",
         "map2.js",
+        "map6.js",
         "untitled.js",
         "untitled.tmj",
         "untitled.tmx"

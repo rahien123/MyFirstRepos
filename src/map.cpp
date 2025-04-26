@@ -70,6 +70,10 @@ Map::Map() {
 	}
 
 }
+Map::Map(int x, int y) {
+	START_MAP_X = x;
+	START_MAP_Y = y;
+}
 Map::~Map() {
 	freeTile();
 }
@@ -159,4 +163,71 @@ void Map::drawMap(SDL_Rect& camera) {
 		}
 	
 
+}
+
+MapManager::MapManager() {
+	mapFiles = { "map1.txt", "map2.txt", "map3.txt", "map4.txt", "map5.txt", "map6.txt" };
+	setTileClips();
+}
+
+MapManager::~MapManager() {
+	for (Map* map : loadedMaps) {
+		delete map;
+	}
+	loadedMaps.clear();
+}
+
+void MapManager::initMaps() {
+	std::shuffle(mapFiles.begin(), mapFiles.end(), std::default_random_engine(std::time(0)));
+
+	for (int i = 0; i < 3; ++i) {
+		Map* map = new Map(i * LEVEL_WIDTH, 0);
+		cout << mapFiles[i].c_str() << endl;
+		map->setTiles(("assets/"+ mapFiles[i]).c_str());
+		loadedMaps.push_back(map);
+	}
+}
+
+
+void MapManager::updateMapsIfNeeded(int playerX) {
+	
+	int currentMapIndex = (playerX / LEVEL_WIDTH);
+
+	
+	if (currentMapIndex == loadedMaps.back()->getStartX() / LEVEL_WIDTH) {
+		
+		delete loadedMaps.front();
+		loadedMaps.erase(loadedMaps.begin());
+
+		
+		std::string newMap = mapFiles[rand() % mapFiles.size()];
+		int newX = loadedMaps.back()->getStartX() + LEVEL_WIDTH;
+		cout << newMap << endl;
+		Map* newMapPtr = new Map(newX, 0);
+		if (newMapPtr->setTiles(("assets/" + newMap).c_str())) {
+			loadedMaps.push_back(newMapPtr);
+		}
+		else {
+			delete newMapPtr;
+		}
+	}
+}
+
+
+void MapManager::renderAllMaps(SDL_Rect& camera) {
+	for (Map* map : loadedMaps) {
+		map->drawMap(camera);
+
+	}
+}
+
+Map* MapManager::getCurrentMap(int playerX) {
+	for (Map* map : loadedMaps) {
+		int startX = map->getStartX();
+		int endX = startX + LEVEL_WIDTH;
+		if (playerX >= startX && playerX < endX) {
+			return map;
+		}
+	}
+	return nullptr;
 }
