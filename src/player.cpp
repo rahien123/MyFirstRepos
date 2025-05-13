@@ -1,4 +1,6 @@
 ﻿#include "player.h"
+#include "map.h"
+
 Player::Player() {
     // Gọi loadSprites nếu cần
     loadSprites();
@@ -32,6 +34,19 @@ bool Player::loadSprites() {
         printf("Unable to load run1.png\n");
         return false;
     }
+
+    const std::string cardNames[13] = { "13","12","11","10","9","8","7","6","5","4","3","2","1"};
+
+    for (int i = 0; i < 13; i++) {
+        cardTextures[i] = new Graphics();
+        std::string path = "assets/" + cardNames[i] + ".jpg";
+
+        if (!cardTextures[i]->loadTexture(path.c_str())) {
+            printf("Failed to load card texture %s!\n", path.c_str());
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -39,17 +54,38 @@ void Player::free() {
     for (int i = 0; i < TOTAL_TILE_SPRITES; i++) {
         sprites[i].free();
     }
+
+    for (int i = 0; i < 13; i++) {
+        if (cardTextures[i] != nullptr) {
+            cardTextures[i]->free();
+            delete cardTextures[i];
+            cardTextures[i] = nullptr;
+        }
+    }
+}
+void Player::renderHealthCards() {
+    int START_X = 10;
+    int START_Y = 10;
+    int OFFSET_X = 8;
+
+    for (int i = 0; i < currentHealth; i++) {
+        int x = START_X + (i * OFFSET_X);
+        int y = START_Y;
+
+        int cardIndex = 12 - (i % 13);
+        cardTextures[cardIndex]->renderCards(x, y);
+    }
 }
 
 void Player::setCamera() {
     mCamera.x = (mPlayerBox.x + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
     mCamera.y = (mPlayerBox.y + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
 
-    //Keep the camera in bounds
     if (mCamera.x < 0)
     {
         mCamera.x = 0;
-    }
+    }//rìa trái level 1
+
     /*if (mCamera.y < 0)
     {
         mCamera.y = 0;
@@ -58,10 +94,11 @@ void Player::setCamera() {
     {
         mCamera.x = LEVEL_WIDTH - SCREEN_WIDTH;
     }*/
+
     if (mCamera.y > LEVEL_HEIGHT - SCREEN_HEIGHT)
     {
         mCamera.y = LEVEL_HEIGHT - SCREEN_HEIGHT;
-    }
+    }//mặt đất
 
     mCamera.w = SCREEN_WIDTH;
     mCamera.h = SCREEN_HEIGHT;
@@ -89,11 +126,15 @@ void Player::HandleEvent(SDL_Event& event) {
     }
 }
 
-
 bool Player::checkCollisionWithLeftWall(Map& tileMap) {
- 
+     //tránh vượt ngoài map ở map khởi đầu   
+    if (mPlayerBox.x <= 0) {
+        mPlayerBox.x = 0;
+        return true;
+    }
     for (int i = 0; i < TOTAL_TILES; ++i) {
         Tile* tile = tileMap.tileSet[i];
+        if (tile == nullptr) continue;
         SDL_Rect box = tile->getBox();
         if (!checkCollision(box, getCamera())) continue;
         if (tile->getType() == TILE_BUILDING || tile->getType() == TILE_ROAD) {
@@ -117,6 +158,7 @@ bool Player::checkCollisionWithGround(Map& tileMap) {
 
     for (int i = 0; i < TOTAL_TILES; ++i) {
         Tile* tile = tileMap.tileSet[i];
+        if (tile == nullptr) continue;
         SDL_Rect box = tile->getBox();
         if (!checkCollision(box, getCamera())) continue;
         if (tile->getType() == TILE_BUILDING || tile->getType() == TILE_ROAD) {
@@ -143,6 +185,7 @@ bool Player::checkCollisionWithRightWall(Map& tileMap) {
 
     for (int i = 0; i < TOTAL_TILES; ++i) {
         Tile* tile = tileMap.tileSet[i];
+        if (tile == nullptr) continue;
         SDL_Rect box = tile->getBox();
         if (!checkCollision(box, getCamera())) continue;
         if (tile->getType() == TILE_BUILDING || tile->getType() == TILE_ROAD ) {
@@ -172,6 +215,7 @@ bool Player::checkCollisionWithCeiling(Map& tileMap) {
 
     for (int i = 0; i < TOTAL_TILES; ++i) {
         Tile* tile = tileMap.tileSet[i];
+        if (tile == nullptr) continue;
         SDL_Rect box = tile->getBox();
         if (!checkCollision(box, getCamera())) continue;
         if (tile->getType() == TILE_BUILDING) {
@@ -190,14 +234,8 @@ bool Player::checkCollisionWithCeiling(Map& tileMap) {
     return false;
 }
 
-void Player::setCollisionStatus(Map& tilemap) {
-
-}
-
-
-
 void Player::move(Map& tileMap) {
-
+    
     // Tính toán vật lý 
     mPlayerBox.x += velX;
     velY += GRAVITY;
@@ -251,10 +289,11 @@ void Player::move(Map& tileMap) {
     if (!onGround && !isSliding) {
         currentFrame = 2;
     }
-    
+   
     setCamera();
 }
 
 void Player::render() {
     sprites[currentFrame].renderPlayer(mPlayerBox.x - mCamera.x, mPlayerBox.y - mCamera.y, NULL, flip);
+    renderHealthCards();
 }

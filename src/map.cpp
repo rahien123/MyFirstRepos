@@ -1,6 +1,8 @@
-#include <SDL.h>
+﻿#include <SDL.h>
 #include <SDL_Image.h>
 #include "map.h"
+#include "RandomObstacle.h"
+#include "player.h"
 
 Graphics gTileTexture;
 SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
@@ -88,7 +90,7 @@ void Map::freeTile() {
 
 }
 
-bool Map::setTiles(const char* mappath) {
+bool Map::setTiles(const char* mappath,Obstacle& obstacleSystem) {
 
 	bool tilesLoaded = true;
 
@@ -145,6 +147,34 @@ bool Map::setTiles(const char* mappath) {
 			}
 		}
 
+		std::string typeStr;
+		int sx, sy, ex, ey;
+		// Read obstacle lines
+		while (map >> typeStr >> sx >> sy >> ex >> ey) {
+			ObstacleType type;
+
+			// Adjust positions by map offset
+			sx += START_MAP_X;
+			sy += START_MAP_Y;
+			ex += START_MAP_X;
+			ey += START_MAP_Y;
+			if (typeStr == "MOVING") {
+				type = ObstacleType::MOVING;
+
+				if (obstacleSystem.movingTexture) {
+					obstacleSystem.obstacles.emplace_back(obstacleSystem.movingTexture,sx, sy, ex, ey,OBSTACLE_SPEED,type);
+				}
+			}
+			else if (typeStr == "BOOMERANG") {
+				
+				type = ObstacleType::BOOMERANG;
+
+				if (obstacleSystem.boomerangTexture && obstacleSystem.throwerTexture) {
+					obstacleSystem.obstacles.emplace_back(obstacleSystem.boomerangTexture,sx, sy, ex, ey,OBSTACLE_SPEED,type,obstacleSystem.throwerTexture);
+				}
+			}
+		}
+
 		map.close();
 
 		return tilesLoaded;
@@ -178,33 +208,42 @@ MapManager::~MapManager() {
 }
 
 void MapManager::initMaps() {
+	if (!obstacleManager) {
+		printf("Warning: Obstacle manager not set in MapManager!\n");
+		return;
+	}
+
 	std::shuffle(mapFiles.begin(), mapFiles.end(), std::default_random_engine(std::time(0)));
 
 	for (int i = 0; i < 3; ++i) {
 		Map* map = new Map(i * LEVEL_WIDTH, 0);
 		cout << mapFiles[i].c_str() << endl;
-		map->setTiles(("assets/"+ mapFiles[i]).c_str());
+		map->setTiles(("assets/"+ mapFiles[i]).c_str(),*obstacleManager);
 		loadedMaps.push_back(map);
 	}
 }
 
 
 void MapManager::updateMapsIfNeeded(int playerX) {
-	
+	if (!obstacleManager) return;
+
 	int currentMapIndex = (playerX / LEVEL_WIDTH);
 
 	
 	if (currentMapIndex == loadedMaps.back()->getStartX() / LEVEL_WIDTH) {
 		
+		int mapToRemoveStartX = loadedMaps.front()->getStartX();
+
 		delete loadedMaps.front();
 		loadedMaps.erase(loadedMaps.begin());
 
+		obstacleManager->removeObstaclesForMap(mapToRemoveStartX);
 		
 		std::string newMap = mapFiles[rand() % mapFiles.size()];
 		int newX = loadedMaps.back()->getStartX() + LEVEL_WIDTH;
 		cout << newMap << endl;
 		Map* newMapPtr = new Map(newX, 0);
-		if (newMapPtr->setTiles(("assets/" + newMap).c_str())) {
+		if (newMapPtr->setTiles(("assets/" + newMap).c_str(),*obstacleManager)) {
 			loadedMaps.push_back(newMapPtr);
 		}
 		else {
@@ -222,6 +261,7 @@ void MapManager::renderAllMaps(SDL_Rect& camera) {
 }
 
 Map* MapManager::getCurrentMap(int playerX) {
+	if (playerX <= 0) return loadedMaps[0];
 	for (Map* map : loadedMaps) {
 		int startX = map->getStartX();
 		int endX = startX + LEVEL_WIDTH;
@@ -231,3 +271,4 @@ Map* MapManager::getCurrentMap(int playerX) {
 	}
 	return nullptr;
 }
+

@@ -23,6 +23,7 @@
     <ClInclude Include="header\Graphics.h" />
     <ClInclude Include="header\map.h" />
     <ClInclude Include="header\player.h" />
+    <ClInclude Include="header\RandomObstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\def.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\project2.cpp" />
+    <ClCompile Include="src\RandomObstacle.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

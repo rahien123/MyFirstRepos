@@ -9,8 +9,12 @@
 #include "Graphics.h"
 #include "def.h"
 
+
 extern Graphics gTileTexture;
 extern SDL_Rect gTileClips[TOTAL_TILE_SPRITES];
+
+class Obstacle;
+class Player;
 
 void setTileClips();
 class Tile
@@ -37,11 +41,7 @@ public:
 	Map(int x, int y);
 	~Map();
 	void freeTile();
-	void setXY(int x, int y) {
-		START_MAP_X = x;
-		START_MAP_Y = y;
-	}
-	bool setTiles(const char* mappath);
+	bool setTiles(const char* mappath, Obstacle& obstacleSystem);
 	void drawMap(SDL_Rect& camera);
 	int getStartX() const { return START_MAP_X; }
 	Tile* tileSet[TOTAL_TILES] ;
@@ -57,6 +57,7 @@ public:
 	MapManager();
 	~MapManager();
 
+	void setObstacleManager(Obstacle* manager) { obstacleManager = manager; }
 	void initMaps();
 	void updateMapsIfNeeded(int playerX);
 	void renderAllMaps(SDL_Rect& camera);
@@ -65,5 +66,8 @@ public:
 private:
 	vector<std::string> mapFiles;
 	vector<Map*> loadedMaps;
+	Obstacle* obstacleManager;
 };
+
+
 

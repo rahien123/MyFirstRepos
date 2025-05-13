@@ -4,7 +4,9 @@
 #include <vector>
 #include "Graphics.h"
 #include "def.h"
-#include "map.h"
+
+
+class Map;
 
 class Player {
 public:
@@ -23,7 +25,6 @@ public:
     bool checkCollisionWithRightWall(Map& tileMap);
     bool checkCollisionWithLeftWall(Map& tileMap);
     bool checkCollisionWithCeiling(Map& tileMap);
-    void setCollisionStatus(Map& tilemap);
 
     SDL_Rect getPlayerBox() {
         return mPlayerBox;
@@ -31,6 +32,14 @@ public:
     void HandleEvent(SDL_Event &event);
     void move(Map& tilemap);
     void render();
+
+    void takeDamage() {
+        if(currentHealth>0)  currentHealth--;
+    }
+    void renderHealthCards();
+    int getPlayerHealth() {
+        return currentHealth;
+    }
 private:
     Graphics sprites[4];
     int currentFrame = 0;
@@ -51,5 +60,6 @@ private:
     bool isSliding = false;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     
-   
+    int currentHealth = 13;
+    Graphics* cardTextures[13];
 };

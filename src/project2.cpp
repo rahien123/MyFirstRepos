@@ -5,26 +5,28 @@
 #include "Graphics.h"
 #include "player.h"
 #include "map.h"
+#include "RandomObstacle.h"
 using namespace std;
-
 
 
 int main(int argc, char* args[]) {
 	init();
+
 	Graphics background;
 	Player player;
 	MapManager map;
-	if (!background.loadTexture("assets/background.png")) {
-		logErrorAndExit("load background failed", SDL_GetError());
-	};
-	if (!player.loadSprites()) {
-		logErrorAndExit("load player sprites failed", SDL_GetError());
-	};
+	Obstacle obstacle;
+
 	if (!gTileTexture.loadTexture("assets/tileset2.png")) {
-		logErrorAndExit("load tile texture sprite failed", SDL_GetError());
+		logErrorAndExit("load tile texture sprite failed", IMG_GetError());
+	}
+	if (!background.loadBackgrounds()) {
+		logErrorAndExit("load background failed", IMG_GetError());
 	}
 	
+	
 	bool quit = false;
+	map.setObstacleManager(&obstacle);
 	map.initMaps();
 	while (!quit) {
 		while (SDL_PollEvent(&event) != 0) {
@@ -34,23 +36,28 @@ int main(int argc, char* args[]) {
 			
 		}
 		background.prepareScene();
-		background.renderBackground(0, 0);
+		background.renderBackground(0, 0,player.getPlayerHealth());
+
+		
 
 		player.move(*map.getCurrentMap(player.getPlayerBox().x));
 
-		map.updateMapsIfNeeded(player.getPlayerBox().x);
-		
 
+		map.updateMapsIfNeeded(player.getPlayerBox().x);
 		map.renderAllMaps(player.getCamera());
+
+		obstacle.checkCollisionWith(player);
+		obstacle.updateAll(player.getCamera());
+		obstacle.renderAll(player.getCamera());
+
 		player.render();
+
 		background.presentScene();
 		SDL_Delay(16);
 
 	}
 
 	close();
-	background.free();
-	player.free();
 	return 0;
 }
 

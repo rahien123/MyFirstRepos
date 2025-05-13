@@ -37,6 +37,10 @@ void init()
 	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
+void loadMedia() {
+
+}
+
 void close() {
 	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
