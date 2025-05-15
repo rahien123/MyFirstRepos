@@ -222,7 +222,7 @@ Obstacle::~Obstacle() {
 
 void Obstacle::updateAll(const SDL_Rect& camera) {
     Uint32 now = SDL_GetTicks();
-    if (now - lastSpawnTime > 2000) {
+    if (now - lastSpawnTime > 3000) {
 
         spawnRandomObstacle(camera);
         lastSpawnTime = now;

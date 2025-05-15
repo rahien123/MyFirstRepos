@@ -45,6 +45,33 @@ bool Graphics::loadTexture(const char* filepath) {
 	return true;
 }
 
+void Graphics::renderText(const std::string& text, int x, int y, SDL_Color color) {
+	
+	SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, text.c_str(), color);
+	if (textSurface == NULL) {
+		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		return;
+	}
+
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	if (textTexture == NULL) {
+		printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+		SDL_FreeSurface(textSurface);
+		return;
+	}
+
+	int textWidth = textSurface->w;
+	int textHeight = textSurface->h;
+
+	SDL_FreeSurface(textSurface);
+
+	SDL_Rect renderQuad = { x, y, textWidth, textHeight };
+
+	SDL_RenderCopy(renderer, textTexture, NULL, &renderQuad);
+
+	SDL_DestroyTexture(textTexture);
+}
+
 void Graphics::prepareScene() {
 	SDL_RenderClear(renderer);
 }

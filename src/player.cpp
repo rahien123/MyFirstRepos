@@ -2,15 +2,29 @@
 #include "map.h"
 
 Player::Player() {
-    // Gọi loadSprites nếu cần
-    loadSprites();
+    // Khởi tạo đầy đủ các biến
     mPlayerBox.x = 128;
     mPlayerBox.y = TILE_HEIGHT * 15 - PLAYER_HEIGHT;
     mPlayerBox.w = PLAYER_WIDTH;
     mPlayerBox.h = PLAYER_HEIGHT;
 
-    setCamera();
+    // Khởi tạo các biến khác
+    velX = speedX;
+    velY = 0;
+    onGround = false;
+    isSliding = false;
+    touchingWallLeft = false;
+    touchingWallRight = false;
+    currentFrame = 0;
+    frameCount = 0;
+    flip = SDL_FLIP_NONE;
+    currentHealth = 13; // Mặc định có 13 lá bài
 
+    // Khởi tạo camera và load sprites
+    setCamera();
+    if (!loadSprites()) {
+        printf("Failed to load player sprites!\n");
+    }
 }
 Player::~Player() {
     free();
@@ -23,15 +37,15 @@ bool Player::loadSprites() {
         return false;
     }
     if (!sprites[1].loadTexture("assets/run2.png")) {
-        printf("Unable to load run1.png\n");
+        printf("Unable to load run2.png\n");
         return false;
     }
     if (!sprites[2].loadTexture("assets/jump.png")) {
-        printf("Unable to load run1.png\n");
+        printf("Unable to load jump.png\n");
         return false;
     }
     if (!sprites[3].loadTexture("assets/slide.png")) {
-        printf("Unable to load run1.png\n");
+        printf("Unable to load slide.png\n");
         return false;
     }
 
@@ -109,6 +123,7 @@ void Player::HandleEvent(SDL_Event& event) {
     if (event.type == SDL_MOUSEBUTTONDOWN || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)) {
         //hiệu ứng nhảy
         currentFrame = 2;
+        playJumpSound();
         if (onGround || isSliding) {
             velY = JUMP_FORCE;
 
@@ -235,7 +250,7 @@ bool Player::checkCollisionWithCeiling(Map& tileMap) {
 }
 
 void Player::move(Map& tileMap) {
-    
+    bool wasInAirBefore = !onGround;
     // Tính toán vật lý 
     mPlayerBox.x += velX;
     velY += GRAVITY;
@@ -278,6 +293,9 @@ void Player::move(Map& tileMap) {
         if (frameCount % 5 == 0) {
             currentFrame = (currentFrame + 1) % 2;
         }
+        if (wasInAirBefore) {
+            playLandSound();
+        }
 
     }
     else {
@@ -293,7 +311,29 @@ void Player::move(Map& tileMap) {
     setCamera();
 }
 
+void Player::takeDamage() {
+    if (currentHealth > 0)  currentHealth--;
+    playHurtSound();
+}
+
 void Player::render() {
     sprites[currentFrame].renderPlayer(mPlayerBox.x - mCamera.x, mPlayerBox.y - mCamera.y, NULL, flip);
     renderHealthCards();
+}
+
+void Player::reset() {
+    // Giữ các textures đã load, chỉ reset các thuộc tính
+    mPlayerBox.x = 128;
+    mPlayerBox.y = TILE_HEIGHT * 15 - PLAYER_HEIGHT;
+    velX = speedX;
+    velY = 0;
+    onGround = false;
+    isSliding = false;
+    touchingWallLeft = false;
+    touchingWallRight = false;
+    currentFrame = 0;
+    frameCount = 0;
+    flip = SDL_FLIP_NONE;
+    currentHealth = 13; // Reset máu
+    setCamera();
 }

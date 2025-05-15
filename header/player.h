@@ -33,13 +33,12 @@ public:
     void move(Map& tilemap);
     void render();
 
-    void takeDamage() {
-        if(currentHealth>0)  currentHealth--;
-    }
+    void takeDamage();
     void renderHealthCards();
     int getPlayerHealth() {
         return currentHealth;
     }
+    void reset();
 private:
     Graphics sprites[4];
     int currentFrame = 0;

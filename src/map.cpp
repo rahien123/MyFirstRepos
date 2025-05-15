@@ -208,6 +208,11 @@ MapManager::~MapManager() {
 }
 
 void MapManager::initMaps() {
+	for (Map* map : loadedMaps) {
+		delete map;
+	}
+	loadedMaps.clear();
+
 	if (!obstacleManager) {
 		printf("Warning: Obstacle manager not set in MapManager!\n");
 		return;

@@ -22,6 +22,7 @@
     <ClInclude Include="header\def.h" />
     <ClInclude Include="header\Graphics.h" />
     <ClInclude Include="header\map.h" />
+    <ClInclude Include="header\menu.h" />
     <ClInclude Include="header\player.h" />
     <ClInclude Include="header\RandomObstacle.h" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <ClCompile Include="src\def.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\project2.cpp" />
     <ClCompile Include="src\RandomObstacle.cpp" />

@@ -12,6 +12,7 @@ public:
 	
 	void free();
 	
+	void renderText(const std::string& text, int x, int y, SDL_Color color);
 
 	bool loadTexture(const char* filepath);
 	bool loadBackgrounds();

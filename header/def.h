@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
+#include "Graphics.h"
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 640
@@ -31,8 +34,19 @@ const float OBSTACLE_SPEED = 5.0f;
 
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
+extern TTF_Font* gFont;
 extern SDL_Event event;
+  
+//score
+extern int highScore;    
+extern int currentScore;
+const int POINTS_PER_MAP = 1000;
 
+//music
+extern Mix_Music* gMusic;           
+extern Mix_Chunk* gJumpSound;     
+extern Mix_Chunk* gWallSlideSound;       
+extern Mix_Chunk* gHurtSound;
 
 bool checkCollision(SDL_Rect a, SDL_Rect b);
 
@@ -40,3 +54,13 @@ void init();
 void close();
 void loadMedia();
 void logErrorAndExit(const char* msg, const char* error);
+
+void renderScore(Graphics& graphics,int playerX);
+void loadHighScore();
+void saveHighScore();
+
+void playMusic();
+void stopMusic();
+void playJumpSound();
+void playLandSound();
+void playHurtSound();

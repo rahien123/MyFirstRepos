@@ -74,6 +74,9 @@ public:
     void spawnRandomObstacle(const SDL_Rect& camera);
 
     void removeObstaclesForMap(int mapStartX);
+    void clearAll() {
+        obstacles.clear();
+    }
 
     SDL_Texture* loadTexture(const std::string& path);
 private:
